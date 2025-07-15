@@ -481,74 +481,6 @@
             </div>
 
             <div class="content">
-                <!-- Period Selector -->
-                <div class="period-selector">
-                    <h3>Pilih Periode</h3>
-                    <div class="period-controls">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Periode</label>
-                            <select v-model="selectedPeriod" @change="updatePeriod">
-                                <option value="">Semua Periode</option>
-                                <option v-for="period in availablePeriods" :key="period.value" :value="period.value">
-                                    {{ period.label }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="data-actions">
-                        <!--    <button @click="clearAllData" class="btn btn-danger">
-                                Hapus Semua Data
-                            </button> -->
-                            <button @click="exportData" class="btn btn-warning">
-                                Export Data
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Summary Cards -->
-                <div class="summary-cards">
-                    <div class="summary-card income">
-                        <h3>Total Pemasukan</h3>
-                        <div class="amount">{{ formatCurrency(periodIncome) }}</div>
-                    </div>
-                    <div class="summary-card expense">
-                        <h3>Total Pengeluaran</h3>
-                        <div class="amount">{{ formatCurrency(periodExpenses) }}</div>
-                    </div>
-                    <div class="summary-card balance">
-                        <h3>Saldo</h3>
-                        <div class="amount">{{ formatCurrency(periodBalance) }}</div>
-                    </div>
-                </div>
-
-                <!-- Comparison Chart -->
-                <div class="comparison-section" v-if="selectedPeriod !== ''">
-                    <h3>Perbandingan {{ selectedPeriodLabel }}</h3>
-                    <div class="comparison-chart">
-                        <div class="chart-bar income">
-                            <div class="chart-fill income" :style="{ width: incomePercentage + '%' }">
-                                {{ incomePercentage }}%
-                            </div>
-                        </div>
-                        <div class="chart-bar expense">
-                            <div class="chart-fill expense" :style="{ width: expensePercentage + '%' }">
-                                {{ expensePercentage }}%
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart-labels">
-                        <div class="chart-label">
-                            <strong>Pemasukan</strong><br>
-                            {{ formatCurrency(periodIncome) }}
-                        </div>
-                        <div class="chart-label">
-                            <strong>Pengeluaran</strong><br>
-                            {{ formatCurrency(periodExpenses) }}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add Transaction Form -->
                 <div class="add-transaction">
                     <h3>Tambah Transaksi</h3>
                     <form @submit.prevent="addTransaction">
@@ -607,7 +539,47 @@
                     </form>
                 </div>
 
-                <!-- Category Summary -->
+                <div class="summary-cards">
+                    <div class="summary-card income">
+                        <h3>Total Pemasukan</h3>
+                        <div class="amount">{{ formatCurrency(periodIncome) }}</div>
+                    </div>
+                    <div class="summary-card expense">
+                        <h3>Total Pengeluaran</h3>
+                        <div class="amount">{{ formatCurrency(periodExpenses) }}</div>
+                    </div>
+                    <div class="summary-card balance">
+                        <h3>Saldo</h3>
+                        <div class="amount">{{ formatCurrency(periodBalance) }}</div>
+                    </div>
+                </div>
+
+                <div class="comparison-section" v-if="selectedPeriod !== ''">
+                    <h3>Perbandingan {{ selectedPeriodLabel }}</h3>
+                    <div class="comparison-chart">
+                        <div class="chart-bar income">
+                            <div class="chart-fill income" :style="{ width: incomePercentage + '%' }">
+                                {{ incomePercentage }}%
+                            </div>
+                        </div>
+                        <div class="chart-bar expense">
+                            <div class="chart-fill expense" :style="{ width: expensePercentage + '%' }">
+                                {{ expensePercentage }}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-labels">
+                        <div class="chart-label">
+                            <strong>Pemasukan</strong><br>
+                            {{ formatCurrency(periodIncome) }}
+                        </div>
+                        <div class="chart-label">
+                            <strong>Pengeluaran</strong><br>
+                            {{ formatCurrency(periodExpenses) }}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="transactions" v-if="periodCategoryExpenses.length > 0">
                     <h3>Ringkasan Kategori</h3>
                     <div class="categories">
@@ -622,7 +594,6 @@
                     </div>
                 </div>
 
-                <!-- Transactions List -->
                 <div class="transactions">
                     <h3>
                         Riwayat Transaksi
@@ -631,6 +602,26 @@
                         </span>
                     </h3>
                     
+                    <div class="period-selector" style="margin-bottom: 20px;">
+                        <h3>Pilih Periode</h3>
+                        <div class="period-controls">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Periode</label>
+                                <select v-model="selectedPeriod" @change="updatePeriod">
+                                    <option value="">Semua Periode</option>
+                                    <option v-for="period in availablePeriods" :key="period.value" :value="period.value">
+                                        {{ period.label }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="data-actions">
+                            <button @click="exportData" class="btn btn-warning">
+                                    Export Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="filter-tabs">
                         <div 
                             @click="filter = 'all'"
@@ -708,7 +699,7 @@
                         description: '',
                         amount: '',
                         category: '',
-                        type: '',
+                        type: 'expense', // Default menjadi pengeluaran
                         note: ''
                     },
                     transactions: [],
@@ -858,7 +849,7 @@
                             description: '',
                             amount: '',
                             category: '',
-                            type: '',
+                            type: 'expense', // Pastikan default tetap pengeluaran setelah penambahan
                             note: ''
                         };
                         
