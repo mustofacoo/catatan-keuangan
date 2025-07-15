@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Elegant</title>
+    <title>Catatan Keuangan</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
     <style>
         * {
@@ -69,6 +69,7 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .summary-cards {
@@ -268,6 +269,17 @@
             background: #c82333;
         }
 
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
         .transactions {
             background: #f8f9fa;
             border-radius: 6px;
@@ -411,6 +423,12 @@
             color: #dc3545;
         }
 
+        .data-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 0;
@@ -447,6 +465,10 @@
             .chart-labels {
                 flex-direction: column;
             }
+
+            .data-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -454,8 +476,8 @@
     <div id="app">
         <div class="container">
             <div class="header">
-                <h1>Expense Tracker</h1>
-                <p>Kelola keuangan pribadi Anda dengan mudah dan efisien</p>
+                <h1>Catatan Keuangan</h1>
+                <p>Agar lebih mudah kita bersyukur dan berharap pada Allah</p>
             </div>
 
             <div class="content">
@@ -471,6 +493,14 @@
                                     {{ period.label }}
                                 </option>
                             </select>
+                        </div>
+                        <div class="data-actions">
+                        <!--    <button @click="clearAllData" class="btn btn-danger">
+                                Hapus Semua Data
+                            </button> -->
+                            <button @click="exportData" class="btn btn-warning">
+                                Export Data
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -578,7 +608,7 @@
                 </div>
 
                 <!-- Category Summary -->
-                <div class="transactions">
+                <div class="transactions" v-if="periodCategoryExpenses.length > 0">
                     <h3>Ringkasan Kategori</h3>
                     <div class="categories">
                         <div 
@@ -681,81 +711,40 @@
                         type: '',
                         note: ''
                     },
-                    transactions: [
-                        {
-                            id: 1,
-                            description: 'Gaji Bulanan',
-                            amount: 5000000,
-                            category: 'Gaji',
-                            type: 'income',
-                            date: new Date('2025-07-01'),
-                            note: 'Gaji bulan Juli'
-                        },
-                        {
-                            id: 2,
-                            description: 'Beli Groceries',
-                            amount: 250000,
-                            category: 'Makanan',
-                            type: 'expense',
-                            date: new Date('2025-07-02'),
-                            note: 'Belanja bulanan'
-                        },
-                        {
-                            id: 3,
-                            description: 'Bayar Listrik',
-                            amount: 150000,
-                            category: 'Utilitas',
-                            type: 'expense',
-                            date: new Date('2025-07-03'),
-                            note: ''
-                        },
-                        {
-                            id: 4,
-                            description: 'Freelance Project',
-                            amount: 1500000,
-                            category: 'Freelance',
-                            type: 'income',
-                            date: new Date('2025-07-15'),
-                            note: 'Project website'
-                        },
-                        {
-                            id: 5,
-                            description: 'Makan Siang',
-                            amount: 75000,
-                            category: 'Makanan',
-                            type: 'expense',
-                            date: new Date('2025-07-16'),
-                            note: ''
-                        }
-                    ],
+                    transactions: [],
                     categories: [
                         'Makanan', 'Transportasi', 'Hiburan', 'Belanja', 'Kesehatan', 
-                        'Pendidikan', 'Utilitas', 'Gaji', 'Freelance', 'Investasi', 'Lainnya'
+                        'Pendidikan', 'Utilitas', 'Gaji', 'Rezeki tak terduga', 'Investasi', 'Lainnya'
                     ]
                 }
             },
             computed: {
                 availablePeriods() {
-                    const startDate = new Date(2025, 6, 1); // Juli 2025 (month index 6)
-                    const currentDate = new Date();
-                    const periods = [];
-                    
-                    let date = new Date(startDate);
-                    
-                    while (date <= currentDate) {
-                        const year = date.getFullYear();
-                        const month = date.getMonth();
-                        const monthName = this.months[month];
-                        
-                        periods.push({
-                            value: `${year}-${month}`,
-                            label: `${monthName} ${year}`
-                        });
-                        
-                        date.setMonth(date.getMonth() + 1);
+                    if (this.transactions.length === 0) {
+                        return [];
                     }
                     
-                    return periods.reverse(); // Urutkan dari terbaru ke terlama
+                    const periods = new Set();
+                    this.transactions.forEach(transaction => {
+                        const date = new Date(transaction.date);
+                        const year = date.getFullYear();
+                        const month = date.getMonth();
+                        periods.add(`${year}-${month}`);
+                    });
+                    
+                    return Array.from(periods)
+                        .sort((a, b) => {
+                            const [yearA, monthA] = a.split('-').map(Number);
+                            const [yearB, monthB] = b.split('-').map(Number);
+                            return yearB - yearA || monthB - monthA;
+                        })
+                        .map(period => {
+                            const [year, month] = period.split('-').map(Number);
+                            return {
+                                value: period,
+                                label: `${this.months[month]} ${year}`
+                            };
+                        });
                 },
                 selectedPeriodLabel() {
                     if (!this.selectedPeriod) return '';
@@ -821,6 +810,36 @@
                 }
             },
             methods: {
+                loadFromStorage() {
+                    try {
+                        const saved = localStorage.getItem('expenseTracker');
+                        if (saved) {
+                            const data = JSON.parse(saved);
+                            if (data.transactions && Array.isArray(data.transactions)) {
+                                this.transactions = data.transactions.map(t => ({
+                                    ...t,
+                                    date: new Date(t.date)
+                                }));
+                            }
+                            if (data.categories && Array.isArray(data.categories)) {
+                                this.categories = [...new Set([...this.categories, ...data.categories])];
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error loading from localStorage:', error);
+                    }
+                },
+                saveToStorage() {
+                    try {
+                        const data = {
+                            transactions: this.transactions,
+                            categories: this.categories
+                        };
+                        localStorage.setItem('expenseTracker', JSON.stringify(data));
+                    } catch (error) {
+                        console.error('Error saving to localStorage:', error);
+                    }
+                },
                 addTransaction() {
                     if (this.newTransaction.description && this.newTransaction.amount && 
                         this.newTransaction.category && this.newTransaction.type) {
@@ -842,10 +861,41 @@
                             type: '',
                             note: ''
                         };
+                        
+                        this.saveToStorage();
                     }
                 },
                 removeTransaction(id) {
                     this.transactions = this.transactions.filter(t => t.id !== id);
+                    this.saveToStorage();
+                },
+                clearAllData() {
+                    if (confirm('Apakah Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.')) {
+                        this.transactions = [];
+                        this.selectedPeriod = '';
+                        this.filter = 'all';
+                        this.saveToStorage();
+                    }
+                },
+                exportData() {
+                    const data = {
+                        transactions: this.transactions,
+                        categories: this.categories,
+                        exportDate: new Date().toISOString()
+                    };
+                    
+                    const blob = new Blob([JSON.stringify(data, null, 2)], {
+                        type: 'application/json'
+                    });
+                    
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `expense-tracker-${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
                 },
                 updatePeriod() {
                     // Method untuk trigger reactive update
@@ -864,6 +914,9 @@
                         day: 'numeric'
                     });
                 }
+            },
+            mounted() {
+                this.loadFromStorage();
             }
         }).mount('#app');
     </script>
