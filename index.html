@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Elegant</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #495057;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .period-selector {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            border: 1px solid #dee2e6;
+        }
+
+        .period-selector h3 {
+            margin-bottom: 15px;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        .period-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .summary-card.income {
+            border-left: 4px solid #28a745;
+        }
+
+        .summary-card.expense {
+            border-left: 4px solid #dc3545;
+        }
+
+        .summary-card.balance {
+            border-left: 4px solid #495057;
+        }
+
+        .summary-card h3 {
+            color: #6c757d;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .summary-card .amount {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .summary-card.income .amount {
+            color: #28a745;
+        }
+
+        .summary-card.expense .amount {
+            color: #dc3545;
+        }
+
+        .summary-card.balance .amount {
+            color: #495057;
+        }
+
+        .comparison-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border: 1px solid #dee2e6;
+        }
+
+        .comparison-section h3 {
+            margin-bottom: 20px;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        .comparison-chart {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            height: 60px;
+        }
+
+        .chart-bar.income {
+            background: #d4edda;
+        }
+
+        .chart-bar.expense {
+            background: #f8d7da;
+        }
+
+        .chart-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .chart-fill.income {
+            background: #28a745;
+        }
+
+        .chart-fill.expense {
+            background: #dc3545;
+        }
+
+        .chart-labels {
+            display: flex;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .chart-label {
+            flex: 1;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .add-transaction {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border: 1px solid #dee2e6;
+        }
+
+        .add-transaction h3 {
+            margin-bottom: 20px;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #495057;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: #495057;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #343a40;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .transactions {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .transactions h3 {
+            margin-bottom: 20px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.1em;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            border: 1px solid #495057;
+            background: white;
+            color: #495057;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .filter-tab.active {
+            background: #495057;
+            color: white;
+        }
+
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+
+        .transaction-item.income {
+            border-left: 4px solid #28a745;
+        }
+
+        .transaction-item.expense {
+            border-left: 4px solid #dc3545;
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-description {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .transaction-details {
+            display: flex;
+            gap: 15px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .transaction-category {
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 15px;
+        }
+
+        .transaction-amount.income {
+            color: #28a745;
+        }
+
+        .transaction-amount.expense {
+            color: #dc3545;
+        }
+
+        .transaction-amount.income::before {
+            content: '+';
+        }
+
+        .transaction-amount.expense::before {
+            content: '-';
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .category-amount {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .transaction-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .period-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comparison-chart {
+                flex-direction: column;
+            }
+
+            .chart-labels {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="header">
+                <h1>Expense Tracker</h1>
+                <p>Kelola keuangan pribadi Anda dengan mudah dan efisien</p>
+            </div>
+
+            <div class="content">
+                <!-- Period Selector -->
+                <div class="period-selector">
+                    <h3>Pilih Periode</h3>
+                    <div class="period-controls">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Periode</label>
+                            <select v-model="selectedPeriod" @change="updatePeriod">
+                                <option value="">Semua Periode</option>
+                                <option v-for="period in availablePeriods" :key="period.value" :value="period.value">
+                                    {{ period.label }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="summary-card income">
+                        <h3>Total Pemasukan</h3>
+                        <div class="amount">{{ formatCurrency(periodIncome) }}</div>
+                    </div>
+                    <div class="summary-card expense">
+                        <h3>Total Pengeluaran</h3>
+                        <div class="amount">{{ formatCurrency(periodExpenses) }}</div>
+                    </div>
+                    <div class="summary-card balance">
+                        <h3>Saldo</h3>
+                        <div class="amount">{{ formatCurrency(periodBalance) }}</div>
+                    </div>
+                </div>
+
+                <!-- Comparison Chart -->
+                <div class="comparison-section" v-if="selectedPeriod !== ''">
+                    <h3>Perbandingan {{ selectedPeriodLabel }}</h3>
+                    <div class="comparison-chart">
+                        <div class="chart-bar income">
+                            <div class="chart-fill income" :style="{ width: incomePercentage + '%' }">
+                                {{ incomePercentage }}%
+                            </div>
+                        </div>
+                        <div class="chart-bar expense">
+                            <div class="chart-fill expense" :style="{ width: expensePercentage + '%' }">
+                                {{ expensePercentage }}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-labels">
+                        <div class="chart-label">
+                            <strong>Pemasukan</strong><br>
+                            {{ formatCurrency(periodIncome) }}
+                        </div>
+                        <div class="chart-label">
+                            <strong>Pengeluaran</strong><br>
+                            {{ formatCurrency(periodExpenses) }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Transaction Form -->
+                <div class="add-transaction">
+                    <h3>Tambah Transaksi</h3>
+                    <form @submit.prevent="addTransaction">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <input 
+                                    type="text" 
+                                    v-model="newTransaction.description"
+                                    placeholder="Contoh: Beli makanan"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah</label>
+                                <input 
+                                    type="number" 
+                                    v-model="newTransaction.amount"
+                                    placeholder="0"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select v-model="newTransaction.category" required>
+                                    <option value="">Pilih kategori</option>
+                                    <option v-for="category in categories" :key="category" :value="category">
+                                        {{ category }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipe</label>
+                                <select v-model="newTransaction.type" required>
+                                    <option value="">Pilih tipe</option>
+                                    <option value="income">Pemasukan</option>
+                                    <option value="expense">Pengeluaran</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan (Opsional)</label>
+                            <textarea 
+                                v-model="newTransaction.note"
+                                placeholder="Catatan tambahan..."
+                                rows="3"
+                            ></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Tambah Transaksi
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Category Summary -->
+                <div class="transactions">
+                    <h3>Ringkasan Kategori</h3>
+                    <div class="categories">
+                        <div 
+                            v-for="category in periodCategoryExpenses" 
+                            :key="category.name"
+                            class="category-card"
+                        >
+                            <div class="category-name">{{ category.name }}</div>
+                            <div class="category-amount">{{ formatCurrency(category.amount) }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions List -->
+                <div class="transactions">
+                    <h3>
+                        Riwayat Transaksi
+                        <span style="font-size: 0.8em; font-weight: normal;">
+                            ({{ filteredTransactions.length }} transaksi)
+                        </span>
+                    </h3>
+                    
+                    <div class="filter-tabs">
+                        <div 
+                            @click="filter = 'all'"
+                            :class="['filter-tab', { active: filter === 'all' }]"
+                        >
+                            Semua
+                        </div>
+                        <div 
+                            @click="filter = 'income'"
+                            :class="['filter-tab', { active: filter === 'income' }]"
+                        >
+                            Pemasukan
+                        </div>
+                        <div 
+                            @click="filter = 'expense'"
+                            :class="['filter-tab', { active: filter === 'expense' }]"
+                        >
+                            Pengeluaran
+                        </div>
+                    </div>
+
+                    <div class="transaction-list">
+                        <div v-if="filteredTransactions.length === 0" class="empty-state">
+                            <h3>Belum ada transaksi</h3>
+                            <p>Mulai tambahkan transaksi untuk melihat riwayat</p>
+                        </div>
+
+                        <div 
+                            v-for="transaction in filteredTransactions" 
+                            :key="transaction.id"
+                            :class="['transaction-item', transaction.type]"
+                        >
+                            <div class="transaction-info">
+                                <div class="transaction-description">
+                                    {{ transaction.description }}
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-category">
+                                        {{ transaction.category }}
+                                    </span>
+                                    <span>{{ formatDate(transaction.date) }}</span>
+                                    <span v-if="transaction.note">{{ transaction.note }}</span>
+                                </div>
+                            </div>
+                            <div class="transaction-amount" :class="transaction.type">
+                                {{ formatCurrency(transaction.amount) }}
+                            </div>
+                            <button 
+                                @click="removeTransaction(transaction.id)"
+                                class="btn btn-danger"
+                                title="Hapus transaksi"
+                            >
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    filter: 'all',
+                    selectedPeriod: '',
+                    months: [
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                    ],
+                    newTransaction: {
+                        description: '',
+                        amount: '',
+                        category: '',
+                        type: '',
+                        note: ''
+                    },
+                    transactions: [
+                        {
+                            id: 1,
+                            description: 'Gaji Bulanan',
+                            amount: 5000000,
+                            category: 'Gaji',
+                            type: 'income',
+                            date: new Date('2025-07-01'),
+                            note: 'Gaji bulan Juli'
+                        },
+                        {
+                            id: 2,
+                            description: 'Beli Groceries',
+                            amount: 250000,
+                            category: 'Makanan',
+                            type: 'expense',
+                            date: new Date('2025-07-02'),
+                            note: 'Belanja bulanan'
+                        },
+                        {
+                            id: 3,
+                            description: 'Bayar Listrik',
+                            amount: 150000,
+                            category: 'Utilitas',
+                            type: 'expense',
+                            date: new Date('2025-07-03'),
+                            note: ''
+                        },
+                        {
+                            id: 4,
+                            description: 'Freelance Project',
+                            amount: 1500000,
+                            category: 'Freelance',
+                            type: 'income',
+                            date: new Date('2025-07-15'),
+                            note: 'Project website'
+                        },
+                        {
+                            id: 5,
+                            description: 'Makan Siang',
+                            amount: 75000,
+                            category: 'Makanan',
+                            type: 'expense',
+                            date: new Date('2025-07-16'),
+                            note: ''
+                        }
+                    ],
+                    categories: [
+                        'Makanan', 'Transportasi', 'Hiburan', 'Belanja', 'Kesehatan', 
+                        'Pendidikan', 'Utilitas', 'Gaji', 'Freelance', 'Investasi', 'Lainnya'
+                    ]
+                }
+            },
+            computed: {
+                availablePeriods() {
+                    const startDate = new Date(2025, 6, 1); // Juli 2025 (month index 6)
+                    const currentDate = new Date();
+                    const periods = [];
+                    
+                    let date = new Date(startDate);
+                    
+                    while (date <= currentDate) {
+                        const year = date.getFullYear();
+                        const month = date.getMonth();
+                        const monthName = this.months[month];
+                        
+                        periods.push({
+                            value: `${year}-${month}`,
+                            label: `${monthName} ${year}`
+                        });
+                        
+                        date.setMonth(date.getMonth() + 1);
+                    }
+                    
+                    return periods.reverse(); // Urutkan dari terbaru ke terlama
+                },
+                selectedPeriodLabel() {
+                    if (!this.selectedPeriod) return '';
+                    const period = this.availablePeriods.find(p => p.value === this.selectedPeriod);
+                    return period ? period.label : '';
+                },
+                periodTransactions() {
+                    if (!this.selectedPeriod) {
+                        return this.transactions;
+                    }
+                    
+                    const [year, month] = this.selectedPeriod.split('-');
+                    const selectedYear = parseInt(year);
+                    const selectedMonth = parseInt(month);
+                    
+                    return this.transactions.filter(t => {
+                        const date = new Date(t.date);
+                        return date.getFullYear() === selectedYear && date.getMonth() === selectedMonth;
+                    });
+                },
+                filteredTransactions() {
+                    let filtered = this.periodTransactions;
+                    if (this.filter !== 'all') {
+                        filtered = filtered.filter(t => t.type === this.filter);
+                    }
+                    return filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+                },
+                periodIncome() {
+                    return this.periodTransactions
+                        .filter(t => t.type === 'income')
+                        .reduce((sum, t) => sum + t.amount, 0);
+                },
+                periodExpenses() {
+                    return this.periodTransactions
+                        .filter(t => t.type === 'expense')
+                        .reduce((sum, t) => sum + t.amount, 0);
+                },
+                periodBalance() {
+                    return this.periodIncome - this.periodExpenses;
+                },
+                periodCategoryExpenses() {
+                    const expenses = {};
+                    this.periodTransactions
+                        .filter(t => t.type === 'expense')
+                        .forEach(t => {
+                            if (!expenses[t.category]) {
+                                expenses[t.category] = 0;
+                            }
+                            expenses[t.category] += t.amount;
+                        });
+                    
+                    return Object.entries(expenses)
+                        .map(([name, amount]) => ({ name, amount }))
+                        .sort((a, b) => b.amount - a.amount);
+                },
+                incomePercentage() {
+                    const total = this.periodIncome + this.periodExpenses;
+                    return total > 0 ? Math.round((this.periodIncome / total) * 100) : 0;
+                },
+                expensePercentage() {
+                    const total = this.periodIncome + this.periodExpenses;
+                    return total > 0 ? Math.round((this.periodExpenses / total) * 100) : 0;
+                }
+            },
+            methods: {
+                addTransaction() {
+                    if (this.newTransaction.description && this.newTransaction.amount && 
+                        this.newTransaction.category && this.newTransaction.type) {
+                        
+                        this.transactions.push({
+                            id: Date.now(),
+                            description: this.newTransaction.description,
+                            amount: parseFloat(this.newTransaction.amount),
+                            category: this.newTransaction.category,
+                            type: this.newTransaction.type,
+                            date: new Date(),
+                            note: this.newTransaction.note || ''
+                        });
+                        
+                        this.newTransaction = {
+                            description: '',
+                            amount: '',
+                            category: '',
+                            type: '',
+                            note: ''
+                        };
+                    }
+                },
+                removeTransaction(id) {
+                    this.transactions = this.transactions.filter(t => t.id !== id);
+                },
+                updatePeriod() {
+                    // Method untuk trigger reactive update
+                },
+                formatCurrency(amount) {
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 0
+                    }).format(amount);
+                },
+                formatDate(date) {
+                    return new Date(date).toLocaleDateString('id-ID', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
