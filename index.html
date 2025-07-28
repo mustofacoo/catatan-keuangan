@@ -16,8 +16,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f8f9fa;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
             color: #333;
+            font-size: 14px;
         }
 
         .container {
@@ -30,88 +31,155 @@
         }
 
         .header {
-            background: #495057;
+            background: linear-gradient(135deg, #495057, #6c757d);
             color: white;
-            padding: 30px;
+            padding: 20px 15px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.2em;
-            margin-bottom: 8px;
+            font-size: 1.6em;
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
         .header p {
             opacity: 0.9;
-            font-size: 1em;
+            font-size: 0.85em;
         }
 
         .content {
-            padding: 30px;
+            padding: 15px;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .quote-text {
+            font-size: 0.95em;
+            font-style: italic;
+            color: #495057;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .quote-source {
+            font-size: 0.8em;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .quote-controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quote-btn {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 20px;
+            background: #495057;
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .quote-btn:hover {
+            background: #343a40;
+            transform: translateY(-1px);
+        }
+
+        .mindful-reminder {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+            font-size: 0.85em;
+            color: #155724;
         }
 
         .period-selector {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 15px;
             border-radius: 6px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border: 1px solid #dee2e6;
         }
 
         .period-selector h3 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #495057;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .period-controls {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .summary-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .summary-card {
             background: #f8f9fa;
-            padding: 25px;
-            border-radius: 6px;
+            padding: 15px 12px;
+            border-radius: 8px;
             text-align: center;
             border: 1px solid #dee2e6;
+            transition: transform 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
         }
 
         .summary-card.income {
             border-left: 4px solid #28a745;
+            background: linear-gradient(135deg, #f8f9fa, #d4edda);
         }
 
         .summary-card.expense {
             border-left: 4px solid #dc3545;
+            background: linear-gradient(135deg, #f8f9fa, #f8d7da);
         }
 
         .summary-card.balance {
             border-left: 4px solid #495057;
+            background: linear-gradient(135deg, #f8f9fa, #e2e3e5);
         }
 
         .summary-card h3 {
             color: #6c757d;
-            font-size: 0.9em;
+            font-size: 0.75em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
         }
 
         .summary-card .amount {
-            font-size: 1.8em;
+            font-size: 1.3em;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 0;
         }
 
         .summary-card.income .amount {
@@ -128,22 +196,22 @@
 
         .comparison-section {
             background: #f8f9fa;
-            padding: 25px;
+            padding: 15px;
             border-radius: 6px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border: 1px solid #dee2e6;
         }
 
         .comparison-section h3 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #495057;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .comparison-chart {
             display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .chart-bar {
@@ -152,7 +220,7 @@
             border-radius: 4px;
             overflow: hidden;
             position: relative;
-            height: 60px;
+            height: 40px;
         }
 
         .chart-bar.income {
@@ -170,7 +238,8 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 0.8em;
+            transition: width 0.5s ease;
         }
 
         .chart-fill.income {
@@ -183,86 +252,94 @@
 
         .chart-labels {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             text-align: center;
         }
 
         .chart-label {
             flex: 1;
-            font-size: 0.9em;
+            font-size: 0.8em;
             color: #6c757d;
         }
 
         .add-transaction {
             background: #f8f9fa;
-            padding: 25px;
-            border-radius: 6px;
-            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
             border: 1px solid #dee2e6;
         }
 
         .add-transaction h3 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #495057;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: #495057;
+            font-size: 0.85em;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #dee2e6;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
             background: white;
+            transition: border-color 0.2s;
         }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: #495057;
+            box-shadow: 0 0 0 2px rgba(73, 80, 87, 0.1);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 10px 16px;
             border: none;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
         }
 
         .btn-primary {
-            background: #495057;
+            background: linear-gradient(135deg, #495057, #343a40);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #343a40;
+            background: linear-gradient(135deg, #343a40, #23272b);
         }
 
         .btn-danger {
             background: #dc3545;
             color: white;
-            padding: 6px 10px;
-            font-size: 12px;
+            padding: 5px 8px;
+            font-size: 11px;
         }
 
         .btn-danger:hover {
@@ -272,8 +349,8 @@
         .btn-warning {
             background: #ffc107;
             color: #212529;
-            padding: 8px 16px;
-            font-size: 12px;
+            padding: 6px 12px;
+            font-size: 11px;
         }
 
         .btn-warning:hover {
@@ -283,35 +360,37 @@
         .transactions {
             background: #f8f9fa;
             border-radius: 6px;
-            padding: 25px;
+            padding: 15px;
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
         }
 
         .transactions h3 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #495057;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .filter-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .filter-tab {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: 1px solid #495057;
             background: white;
             color: #495057;
-            border-radius: 4px;
+            border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
+            transition: all 0.2s;
         }
 
         .filter-tab.active {
@@ -320,7 +399,7 @@
         }
 
         .transaction-list {
-            max-height: 400px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
@@ -328,11 +407,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
             background: white;
-            border-radius: 4px;
+            border-radius: 6px;
             border: 1px solid #dee2e6;
+            transition: transform 0.2s;
+        }
+
+        .transaction-item:hover {
+            transform: translateX(2px);
         }
 
         .transaction-item.income {
@@ -349,29 +433,31 @@
 
         .transaction-description {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: #333;
+            font-size: 0.9em;
         }
 
         .transaction-details {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             color: #6c757d;
-            font-size: 14px;
+            font-size: 12px;
+            flex-wrap: wrap;
         }
 
         .transaction-category {
             background: #e9ecef;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
             font-weight: 600;
         }
 
         .transaction-amount {
             font-weight: bold;
-            font-size: 1.1em;
-            margin-right: 15px;
+            font-size: 1em;
+            margin-right: 10px;
         }
 
         .transaction-amount.income {
@@ -392,82 +478,247 @@
 
         .empty-state {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: #6c757d;
         }
 
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .category-card {
             background: white;
-            padding: 20px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 6px;
             text-align: center;
             border: 1px solid #dee2e6;
+            transition: transform 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-1px);
         }
 
         .category-name {
             font-weight: 600;
             color: #495057;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 0.8em;
         }
 
         .category-amount {
-            font-size: 1.1em;
+            font-size: 0.95em;
             font-weight: bold;
             color: #dc3545;
         }
 
         .data-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .gratitude-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+            text-align: center;
+        }
+
+        .gratitude-text {
+            font-size: 0.9em;
+            color: #856404;
+            font-weight: 500;
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 5px;
+                font-size: 13px;
+            }
+            
             .container {
                 margin: 0;
                 border-radius: 0;
             }
             
+            .header {
+                padding: 15px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.4em;
+            }
+
+            .header p {
+                font-size: 0.8em;
+            }
+
+            .content {
+                padding: 10px;
+            }
+
+            .quote-section {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .quote-text {
+                font-size: 0.85em;
+            }
+
+            .quote-source {
+                font-size: 0.75em;
+            }
+            
             .form-row {
                 grid-template-columns: 1fr;
+                gap: 10px;
             }
             
             .summary-cards {
                 grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .summary-card {
+                padding: 12px 10px;
+            }
+
+            .summary-card .amount {
+                font-size: 1.2em;
             }
             
             .filter-tabs {
                 flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .filter-tab {
+                padding: 5px 10px;
+                font-size: 11px;
             }
             
             .transaction-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .transaction-details {
+                gap: 8px;
             }
 
             .period-controls {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
             }
 
             .comparison-chart {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .chart-labels {
                 flex-direction: column;
+                gap: 5px;
             }
 
             .data-actions {
                 flex-direction: column;
+            }
+
+            .categories {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+
+            .category-card {
+                padding: 10px 8px;
+            }
+
+            .category-name {
+                font-size: 0.75em;
+            }
+
+            .category-amount {
+                font-size: 0.85em;
+            }
+
+            .add-transaction, .transactions, .period-selector, .comparison-section {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group input, .form-group select, .form-group textarea {
+                padding: 8px 10px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .transaction-list {
+                max-height: 300px;
+            }
+
+            .mindful-reminder {
+                padding: 10px;
+                font-size: 0.8em;
+                margin-bottom: 12px;
+            }
+
+            .gratitude-section {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .gratitude-text {
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                font-size: 12px;
+            }
+
+            .header h1 {
+                font-size: 1.2em;
+            }
+
+            .summary-card .amount {
+                font-size: 1.1em;
+            }
+
+            .transaction-description {
+                font-size: 0.85em;
+            }
+
+            .transaction-details {
+                font-size: 11px;
+            }
+
+            .category-name {
+                font-size: 0.7em;
+            }
+
+            .category-amount {
+                font-size: 0.8em;
             }
         }
     </style>
@@ -476,13 +727,32 @@
     <div id="app">
         <div class="container">
             <div class="header">
-                <h1>Catatan Keuangan</h1>
+                <h1>Catatan Keuangan Sederhana</h1>
                 <p>Agar lebih mudah kita bersyukur dan berharap pada Allah</p>
             </div>
 
             <div class="content">
+                <div class="quote-section">
+                    <div class="quote-text">{{ currentQuote.text }}</div>
+                    <div class="quote-source">{{ currentQuote.source }}</div>
+                    <div class="quote-controls">
+                        <button class="quote-btn" @click="prevQuote">⬅️</button>
+                        <button class="quote-btn" @click="nextQuote">➡️</button>
+                    </div>
+                </div>
+
+                <div class="mindful-reminder" v-if="mindfulReminder">
+                    <strong>💡 {{ mindfulReminder }}</strong>
+                </div>
+
+                <div class="gratitude-section" v-if="showGratitude && periodBalance > 0">
+                    <div class="gratitude-text">
+                        🤲 Alhamdulillah, keuangan anda sehat. Jangan lupa bersyukur dan berbagi rezeki kepada yang membutuhkan.
+                    </div>
+                </div>
+
                 <div class="add-transaction">
-                    <h3>Tambah Transaksi</h3>
+                    <h3>➕ Tambah Transaksi</h3>
                     <form @submit.prevent="addTransaction">
                         <div class="form-row">
                             <div class="form-group">
@@ -508,7 +778,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Kategori</label>
+                                <label>🏷️ Kategori</label>
                                 <select v-model="newTransaction.category" required>
                                     <option value="">Pilih kategori</option>
                                     <option v-for="category in categories" :key="category" :value="category">
@@ -530,11 +800,11 @@
                             <textarea 
                                 v-model="newTransaction.note"
                                 placeholder="Catatan tambahan..."
-                                rows="3"
+                                rows="2"
                             ></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">
-                            Tambah Transaksi
+                             Tambah Transaksi
                         </button>
                     </form>
                 </div>
@@ -549,13 +819,13 @@
                         <div class="amount">{{ formatCurrency(periodExpenses) }}</div>
                     </div>
                     <div class="summary-card balance">
-                        <h3>Saldo</h3>
+                        <h3>⚖️ Saldo</h3>
                         <div class="amount">{{ formatCurrency(periodBalance) }}</div>
                     </div>
                 </div>
 
                 <div class="comparison-section" v-if="selectedPeriod !== ''">
-                    <h3>Perbandingan {{ selectedPeriodLabel }}</h3>
+                    <h3> Perbandingan {{ selectedPeriodLabel }}</h3>
                     <div class="comparison-chart">
                         <div class="chart-bar income">
                             <div class="chart-fill income" :style="{ width: incomePercentage + '%' }">
@@ -597,15 +867,15 @@
                 <div class="transactions">
                     <h3>
                         Riwayat Transaksi
-                        <span style="font-size: 0.8em; font-weight: normal;">
-                            ({{ filteredTransactions.length }} transaksi)
+                        <span style="font-size: 0.7em; font-weight: normal;">
+                            ({{ filteredTransactions.length }})
                         </span>
                     </h3>
                     
-                    <div class="period-selector" style="margin-bottom: 20px;">
+                    <div class="period-selector" style="margin-bottom: 15px;">
                         <h3>Pilih Periode</h3>
                         <div class="period-controls">
-                            <div class="form-group" style="margin-bottom: 0;">
+                            <div class="form-group" style="margin-bottom: 0; min-width: 200px;">
                                 <label>Periode</label>
                                 <select v-model="selectedPeriod" @change="updatePeriod">
                                     <option value="">Semua Periode</option>
@@ -615,8 +885,8 @@
                                 </select>
                             </div>
                             <div class="data-actions">
-                            <button @click="exportData" class="btn btn-warning">
-                                    Export Data
+                                <button @click="exportData" class="btn btn-warning">
+                                    📤 Export
                                 </button>
                             </div>
                         </div>
@@ -633,19 +903,19 @@
                             @click="filter = 'income'"
                             :class="['filter-tab', { active: filter === 'income' }]"
                         >
-                            Pemasukan
+                            Masuk
                         </div>
                         <div 
                             @click="filter = 'expense'"
                             :class="['filter-tab', { active: filter === 'expense' }]"
                         >
-                            Pengeluaran
+                            Keluar
                         </div>
                     </div>
 
                     <div class="transaction-list">
                         <div v-if="filteredTransactions.length === 0" class="empty-state">
-                            <h3>Belum ada transaksi</h3>
+                            <h3> Belum ada transaksi</h3>
                             <p>Mulai tambahkan transaksi untuk melihat riwayat</p>
                         </div>
 
@@ -662,8 +932,8 @@
                                     <span class="transaction-category">
                                         {{ transaction.category }}
                                     </span>
-                                    <span>{{ formatDate(transaction.date) }}</span>
-                                    <span v-if="transaction.note">{{ transaction.note }}</span>
+                                    <span> {{ formatDate(transaction.date) }}</span>
+                                    <span v-if="transaction.note"> {{ transaction.note }}</span>
                                 </div>
                             </div>
                             <div class="transaction-amount" :class="transaction.type">
@@ -674,7 +944,7 @@
                                 class="btn btn-danger"
                                 title="Hapus transaksi"
                             >
-                                Hapus
+                                🗑️
                             </button>
                         </div>
                     </div>
@@ -691,6 +961,8 @@
                 return {
                     filter: 'all',
                     selectedPeriod: '',
+                    currentQuoteIndex: 0,
+                    showGratitude: true,
                     months: [
                         'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
                         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
@@ -699,13 +971,98 @@
                         description: '',
                         amount: '',
                         category: '',
-                        type: 'expense', // Default menjadi pengeluaran
+                        type: 'expense',
                         note: ''
                     },
                     transactions: [],
                     categories: [
                         'Makanan', 'Transportasi', 'Hiburan', 'Belanja', 'Kesehatan', 
                         'Pendidikan', 'Utilitas', 'Gaji', 'Rezeki tak terduga', 'Investasi', 'Lainnya'
+                    ],
+                    quotes: [
+                        {
+                            text: "Dan apa saja yang kamu infakkan, maka Allah akan menggantinya.",
+                            source: "Al-Qur'an, Saba' [34]:39"
+                        },
+                        {
+                            text: "Sedekah tidak akan mengurangi harta.",
+                            source: "HR. Muslim"
+                        },
+                        {
+                            text: "Harta yang baik adalah untuk orang yang baik pula.",
+                            source: "HR. Ahmad"
+                        },
+                        {
+                            text: "Berikanlah zakat, karena zakat itu membersihkan harta dan jiwa.",
+                            source: "Al-Qur'an, At-Taubah [9]:103"
+                        },
+                        {
+                            text: "Orang yang bersedekah dengan tangan kanan sehingga tangan kiri tidak tahu apa yang diberikan.",
+                            source: "HR. Bukhari"
+                        },
+
+                        {
+                            text: "Tidak akan berkurang harta karena sedekah, dan Allah tidak menambah seorang hamba yang pemaaf melainkan kemuliaan.",
+                            source: "HR. Muslim"
+                        },
+                        {
+                            text: "Dan di dalam harta-harta mereka ada hak untuk orang miskin yang meminta dan orang miskin yang tidak mendapat bagian.",
+                            source: "Al-Qur'an, Adz-Dzariyat [51]:19"
+                        },
+                        {
+                            text: "Sesungguhnya bersama kesulitan itu ada kemudahan.",
+                            source: "Al-Qur'an, Al-Insyirah [94]:6"
+                        },
+                        {
+                            text: "Dan Allah akan memberikan balasan yang lebih baik kepada orang-orang yang bersabar.",
+                            source: "Al-Qur'an, An-Nahl [16]:96"
+                        },
+                        {
+                            text: "Siapa yang mensyukuri nikmat, maka akan ditambahkan kepadanya.",
+                            source: "Al-Qur'an, Ibrahim [14]:7"
+                        },
+                        {
+                            text: "Rezeki itu sudah dijamin oleh Allah, yang perlu diusahakan adalah ketakwaan.",
+                            source: "Imam Ali r.a."
+                        },
+                        {
+                            text: "Jadilah kamu orang yang sederhana dalam pengeluaran, jangan berlebih-lebihan dan jangan kikir.",
+                            source: "Al-Qur'an, Al-Furqan [25]:67"
+                        },
+                        {
+                            text: "Harta yang berkah adalah harta yang dikeluarkan zakatnya.",
+                            source: "HR. Ibnu Majah"
+                        },
+                        {
+                            text: "Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia.",
+                            source: "HR. Ahmad"
+                        },
+                        {
+                            text: "Allah menjamin rezeki setiap makhluk-Nya.",
+                            source: "Al-Qur'an, Hud [11]:6"
+                        },
+                        
+
+                        {
+                            text: "Tidak ada hari berlalu melainkan ada dua malaikat turun, salah satunya berdo'a: 'Ya Allah, berikanlah ganti kepada orang yang berinfak'.",
+                            source: "HR. Bukhari"
+                        },
+                        {
+                            text: "Berhati-hatilah dengan hutang, karena hutang adalah kehinaan di siang hari dan kegelisahan di malam hari.",
+                            source: "HR. Ahmad"
+                        },
+                        {
+                            text: "Siapa yang ingin dilapangkan rezekinya dan dipanjangkan umurnya, maka hendaklah ia berbuat baik kepada keluarganya.",
+                            source: "HR. Bukhari"
+                        }
+                    ],
+                    mindfulReminders: [
+                        "Ingatlah untuk bersyukur atas setiap rezeki yang diberikan",
+                        "Periksa kembali, apakah pengeluaran ini benar-benar diperlukan?",
+                        "Sisihkan untuk sedekah dari setiap pemasukan",
+                        "Hemat bukan berarti pelit, tapi bijak dalam mengelola rezeki",
+                        "Hindari utang untuk hal-hal yang tidak mendesak",
+                        "Investasi terbaik adalah investasi untuk akhirat"
                     ]
                 }
             },
@@ -798,6 +1155,19 @@
                 expensePercentage() {
                     const total = this.periodIncome + this.periodExpenses;
                     return total > 0 ? Math.round((this.periodExpenses / total) * 100) : 0;
+                },
+                currentQuote() {
+                    return this.quotes[this.currentQuoteIndex] || { text: '', source: '' };
+                },
+                mindfulReminder() {
+                    const hour = new Date().getHours();
+                    if (hour >= 6 && hour < 12) {
+                        return this.mindfulReminders[0]; // pagi
+                    } else if (hour >= 12 && hour < 18) {
+                        return this.mindfulReminders[1]; // siang
+                    } else {
+                        return this.mindfulReminders[2]; // malam
+                    }
                 }
             },
             methods: {
@@ -849,24 +1219,18 @@
                             description: '',
                             amount: '',
                             category: '',
-                            type: 'expense', // Pastikan default tetap pengeluaran setelah penambahan
+                            type: 'expense',
                             note: ''
                         };
                         
                         this.saveToStorage();
+                        // Show random mindful reminder after adding transaction
+                        this.showRandomMindfulReminder();
                     }
                 },
                 removeTransaction(id) {
                     this.transactions = this.transactions.filter(t => t.id !== id);
                     this.saveToStorage();
-                },
-                clearAllData() {
-                    if (confirm('Apakah Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.')) {
-                        this.transactions = [];
-                        this.selectedPeriod = '';
-                        this.filter = 'all';
-                        this.saveToStorage();
-                    }
                 },
                 exportData() {
                     const data = {
@@ -882,7 +1246,7 @@
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `expense-tracker-${new Date().toISOString().split('T')[0]}.json`;
+                    a.download = `catatan-keuangan-${new Date().toISOString().split('T')[0]}.json`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
@@ -904,10 +1268,32 @@
                         month: 'short',
                         day: 'numeric'
                     });
+                },
+                nextQuote() {
+                    this.currentQuoteIndex = (this.currentQuoteIndex + 1) % this.quotes.length;
+                },
+                prevQuote() {
+                    this.currentQuoteIndex = (this.currentQuoteIndex - 1 + this.quotes.length) % this.quotes.length;
+                },
+                startQuoteRotation() {
+                    setInterval(() => {
+                        this.nextQuote();
+                    }, 15000); // Rotate every 15 seconds (diperlambat)
+                },
+                showRandomMindfulReminder() {
+                    // Show a random reminder for 5 seconds
+                    const randomIndex = Math.floor(Math.random() * this.mindfulReminders.length);
+                    const originalReminder = this.mindfulReminder;
+                    this.mindfulReminders.unshift(this.mindfulReminders[randomIndex]);
+                    
+                    setTimeout(() => {
+                        this.mindfulReminders.shift();
+                    }, 5000);
                 }
             },
             mounted() {
                 this.loadFromStorage();
+                this.startQuoteRotation();
             }
         }).mount('#app');
     </script>
